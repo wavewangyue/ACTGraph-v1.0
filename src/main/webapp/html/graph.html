@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KnowledgeGraph v1.0</title>
+    <script src="js/ex/echarts.js"></script>
+    <script src="js/ex/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+
+<style>
+    html,body{ 
+        margin:0px; 
+        height:100%;
+    }
+    body{
+        background-color:#060A0E;
+    }
+ 
+</style>
+
+<body onload="init()">
+    
+    <div id="panel" style="position:absolute;width:100%;height:100%;display:none"></div>
+
+    <div id="inputbox" class="input-group input-group-lg" style="padding-top:20%;width:50%;padding-left:20%" >
+        <input type="text" class="form-control" placeholder="周恩来" style="text-align:center" onkeydown="if(event.keyCode==13) graphinit()"/>
+        <span class="input-group-addon">Graph Go!</span>        
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    var myChart;
+    var nodes = [];
+    var links = [];
+    var categories = [];
+    var nodeSize = 50;
+    var dnodeSize = 8;
+    var fontSize = 15;
+
+    function init(){
+
+    }
+
+    function graphinit(){
+
+        $('#inputbox').fadeOut();
+        $('#panel').fadeIn();
+        myChart = echarts.init(document.getElementById('panel'));
+        getNewData("周恩来");
+
+    }
+
+    function getNewData(keyword){
+
+        myChart.showLoading();
+        $.getJSON("json/demo.json", function(result){
+
+            var category_names = [];
+            result.nodes.forEach(function(node){
+                if ($.inArray(node.category,categories) < 0){
+                    category_names.push(node.category);
+                    categories.push({
+                        name: node.category
+                    });
+                }
+                node.symbol = 'circle';
+                node.symbolSize = nodeSize-node.value*dnodeSize;
+                node.x = null;
+                node.y = null;
+                node.itemStyle = null;
+                node.label = {
+                    normal: {
+                        show: true,
+                        position: 'right'
+                    }
+                };
+                nodes.push(node); 
+            });
+            result.links.forEach(function(edge){   
+                links.push(edge);
+            });
+
+            upNewGraph(keyword);            
+        });
+    }
+
+    function upNewGraph(keyword){
+
+        option = {
+            title: {
+                text: keyword,
+                bottom: '10%',
+                left: '10%',
+                textStyle:{
+                    color:"GreenYellow",
+                    fontSize: fontSize*1.5
+                }
+            },
+            tooltip: {
+                formatter: function (params) {
+                    return params.data.name;
+                }
+            },
+            legend:[{
+                data: categories,
+                bottom: '10%',
+                right: '10%',
+                orient: 'vertical',
+                itemGap: 20,
+                selectedMode:false,
+                textStyle:{
+                    color:'gray'
+                }
+            }],
+            series:[{
+                type: 'graph',
+                layout: 'force',
+                data: nodes,
+                links: links,
+                categories: categories,
+                lineStyle: {
+                    normal: {
+                        color: 'source',
+                        width: 2,
+                        curveness: 0.2
+                    }
+                },
+                force: {
+                    repulsion: 800,
+                    layoutAnimation: false
+                },
+                roam: true,
+                focusNodeAdjacency: true,
+                animationDuration: 1500
+            }],
+            textStyle: {
+                fontFamily: '微软雅黑',
+                fontSize: fontSize
+            },            
+        };
+
+        myChart.hideLoading();
+        myChart.setOption(option);
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="actgraph:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="actgraph.war">
+      <element id="artifact" artifact-name="actgraph:war exploded" />
+    </root>
+  </artifact>
+</component>
