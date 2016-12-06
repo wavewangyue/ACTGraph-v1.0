@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KnowledgeGraph v1.0</title>
+    <script src="js/ex/echarts.js"></script>
+    <script src="js/ex/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<style>
+    html,body{ 
+        margin:0px; 
+        height:100%;
+    }
+    body{
+        background-color:#060A0E;
+    }
+ 
+</style>
+
+<body onload="init()">
+
+    <div id="panel" style="position:absolute;width:100%;height:100%;display:none"></div>
+
+    <div id="inputbox" class="input-group input-group-lg" style="padding-top:25%;width:30%;margin:0 auto" >
+        <input id="input" type="text" class="form-control" style="text-align:center" value="北京航空航天大学" onkeydown="if(event.keyCode==13) graphinit()"/>
+        <span class="input-group-addon" style="cursor:pointer" onclick="graphinit()">Graph Go!</span>
+    </div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    var myChart;
+    var nodes = [];
+    var links = [];
+    var categories = [];
+    var answerpath = [];
+    var nodeSize = 50;
+    var dnodeSize = 8;
+    var fontSize = 15;
+
+    function init(){
+
+    }
+
+    //获取根目录路径
+    function getRootPath(){
+        var curWwwPath=window.document.location.href;
+        var pathName=window.document.location.pathname;
+        var pos=curWwwPath.indexOf(pathName);
+        var localhostPath=curWwwPath.substring(0,pos);
+        var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+        return(localhostPath+projectName);
+    }
+
+    function graphinit(){
+
+        var keyword = document.getElementById("input").value;
+        while (keyword.charAt(0) == " ") keyword = keyword.substring(1);
+        if (keyword!="") {
+            $('#inputbox').fadeOut();
+            $('#panel').fadeIn();
+            myChart = echarts.init(document.getElementById('panel'));
+            getNewData(keyword);
+        }
+
+    }
+
+    function getNewData(keyword){
+
+        myChart.showLoading();
+        var url = getRootPath()+"/graph/answering.do?keyword="+keyword;
+        $.getJSON("json/demo.json", function(result){
+        //$.getJSON(url, function(result){
+            answerpath = result.answers;
+            console.log(answerpath);
+            var category_names = [];
+            myChart.hideLoading();
+            result.nodes.forEach(function(node){
+                if ($.inArray(node.category,categories) < 0){
+                    category_names.push(node.category);
+                    categories.push({
+                        name: node.category
+                    });
+                }
+                node.symbol = 'circle';
+                node.symbolSize = nodeSize-node.value*dnodeSize;
+                node.x = null;
+                node.y = null;
+                node.itemStyle = null;
+                node.label = {
+                    normal: {
+                        show: true,
+                        position: 'right'
+                    }
+                };
+                nodes.push(node); 
+            });
+            result.links.forEach(function(edge){   
+                links.push(edge);
+            });
+            //点亮寻找的答案轨迹
+            standNow = answerpath[0];
+            for (node in nodes){
+                if (node.name == word)
+                    node.itemStyle = {
+                        normal: {
+                            borderColor:'GreenYellow',
+                            borderWidth:5
+                        }
+                    };
+            }
+            //开始绘制图像
+            upNewGraph(keyword);
+        });
+    }
+
+    function upNewGraph(keyword){
+
+        option = {
+            title: {
+                text: keyword,
+                bottom: '10%',
+                left: '10%',
+                textStyle:{
+                    color:"GreenYellow",
+                    fontSize: fontSize*1.5
+                }
+            },
+            tooltip: {
+                formatter: function (params) {
+                    return params.data.name;
+                }
+            },
+            legend:[{
+                data: categories,
+                bottom: '10%',
+                right: '10%',
+                orient: 'vertical',
+                itemGap: 20,
+                selectedMode:false,
+                textStyle:{
+                    color:'gray'
+                }
+            }],
+            series:[{
+                type: 'graph',
+                layout: 'force',
+                data: nodes,
+                links: links,
+                categories: categories,
+                lineStyle: {
+                    normal: {
+                        color: 'source',
+                        width: 2,
+                        curveness: 0.2
+                    }
+                },
+                force: {
+                    repulsion: 800,
+                    layoutAnimation: false
+                },
+                roam: true,
+                focusNodeAdjacency: true,
+                animationDuration: 1500
+            }],
+            textStyle: {
+                fontFamily: '微软雅黑',
+                fontSize: fontSize
+            },            
+        };
+        myChart.setOption(option);
+    }
+
+</script>
+
+</html>

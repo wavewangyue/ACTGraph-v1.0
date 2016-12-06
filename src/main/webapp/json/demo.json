@@ -78,5 +78,6 @@
 		{"id":43,"source":19,"target":28,"name":"出生地","level":4},
 		{"id":44,"source":21,"target":29,"name":"国籍","level":4},
 		{"id":45,"source":21,"target":22,"name":"主要思想","level":4}
-	]
+	],
+	"answers":["周恩来","国籍","首都"]
 }

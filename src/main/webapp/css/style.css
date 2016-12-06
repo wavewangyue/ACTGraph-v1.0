@@ -52,13 +52,12 @@
     font-size:15px;
 }
 .iconunit{
-    position:fixed;
+    position:absolute;
     text-align:center;
     z-index:100;
 }
 .icon {
-    width:50px;
-    height:50px;
+    width:50%;
     cursor:pointer;
     border-radius:50px;
 }
@@ -66,8 +65,7 @@
     background-color:#818181;
 }
 .icon_active{
-    width:50px;
-    height:50px;
+    width:50%;
     cursor:pointer;
     border-radius:50px;
     background-color:GreenYellow;
@@ -75,7 +73,7 @@
 .icontext{
     font-family:"微软雅黑";
     color:#212121;
-    font-size:15px;
+    font-size:18px;
     font-weight:bold;
 }
 .icontext_active{
@@ -95,12 +93,9 @@
     position:absolute;
     width:30%;
     height:100%;
-    margin-left:100%;
-    background-color:#212121;
-    text-align:right;
+    margin-left:70%;
     z-index:10;
     font-family:"微软雅黑";
-    color:black;
     text-align:center;
     overflow-y:auto;
 }
@@ -217,32 +212,10 @@
     fill: #414141;
     text-anchor: left;
 }
-.rulebar{
+.rulebar {
     border: 2px solid purple;
-    margin-top:15px;
+    margin-top: 15px;
     border-radius: 10px;
-    width:500px;
-    height:50px;
-}
-/*!
-    移动端所用到的样式
- */
-.infotext1_mobile{
-    font-family:"微软雅黑";
-    font-size:4.5em;
-    font-weight:bold;
-    color:white;
-    margin:0;
-    padding:1em 1em;
-}
-.infotext2_mobile{
-    font-family:"微软雅黑";
-    font-size:4em;
-    color:white;
-    margin:0;
-    padding:0em 1em;
-    padding-bottom:2em;
-}
-.minfobox{
-    width:100%;
+    width: 500px;
+    height: 50px;
 }

@@ -1,5 +1,7 @@
 package act.graph.repository;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.http.HttpEntity;
@@ -13,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by yumiao on 16-4-19.
@@ -24,9 +26,9 @@ public class Neo4jRepository {
     private static final Logger log = LoggerFactory.getLogger(Neo4jRepository.class);
 
     //数据库地址
-    private static String url="http://10.1.1.4:7474/db/data/transaction/commit";
+    private static String url="http://10.1.1.28:7474/db/data/transaction/commit";
 
-    public JsonObject requestNeo4j(String query) throws IOException {
+    public JsonArray requestNeo4j(String query) throws IOException {
         log.info("Neo4JQuery:"+query);
         HttpClient httpclient = HttpClientBuilder.create().build();
         /**
@@ -42,7 +44,7 @@ public class Neo4jRepository {
         StringEntity se = new StringEntity(
                 "{\"statements\":[{\"statement\":\""
                         + query
-                        + "\",\"resultDataContents\":[\"row\",\"graph\"],\"includeStats\":true}]}",
+                        + "\",\"resultDataContents\":[\"row\"],\"includeStats\":true}]}",
                 "UTF-8");
         httppost.setEntity(se);
         /**
@@ -53,9 +55,8 @@ public class Neo4jRepository {
         String result = EntityUtils.toString(entity, "UTF-8");
         if (entity != null) {
             JsonObject jsonrs = new JsonParser().parse(result).getAsJsonObject();
-            //log.info("数据库传给后台的数据:");
-            //log.info(jsonrs.toString());
-        	return jsonrs;
+            JsonArray data = jsonrs.getAsJsonArray("results").get(0).getAsJsonObject().getAsJsonArray("data");
+            return data;
         }
         return null;
 
