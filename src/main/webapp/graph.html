@@ -98,7 +98,7 @@
             d3.select("#talkinput").remove();
             d3.select(".talkbar").append("div")
                     .attr("class","talkbubble")
-                    .style("color","#4169E1")
+                    .style("color","lightblue")
                     .text(question);
             var url = getRootPath()+"/easyQA/talk.do?question="+question;
             $.getJSON(url, function(result){

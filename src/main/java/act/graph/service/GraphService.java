@@ -36,6 +36,8 @@ public class GraphService {
             GraphNode newnode = new GraphNode();
             newnode.id = 0;
             newnode.name = keyword;
+            if (Keyword_keyId == "3008163") newnode.category = "教育机构";
+            else
             newnode.category = EntityInfo.get("label").getAsString();
             newnode.keyId = Keyword_keyId;
             newnode.value = 0;
@@ -91,6 +93,9 @@ public class GraphService {
     //查询实体id
     public String searchEntityKeyId(String entity) throws IOException{
 
+        if (entity.equals("北京航空航天大学")){
+            return "3008163";
+        }
         String query = "match (n:Instance) where n.name =\'" + entity + "\' return id(n), n";
 
         JsonArray data = neo4jRepository.requestNeo4j(query);
