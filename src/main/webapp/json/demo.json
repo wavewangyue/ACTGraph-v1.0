@@ -79,5 +79,6 @@
 		{"id":44,"source":21,"target":29,"name":"国籍","level":4},
 		{"id":45,"source":21,"target":22,"name":"主要思想","level":4}
 	],
-	"answers":["周恩来","国籍","首都"]
+	"answerpath":[0,3,9],
+	"answer":"北京"
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by wave on 16-12-6.
  */
 @Controller
-@RequestMapping("/graph")
+@RequestMapping("/graphQA")
 public class GraphSearchController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class GraphSearchController {
         if (keyword != null) keyword = new String(keyword.getBytes("iso-8859-1"),"UTF-8");
         List<String> finallist = segService.getFinalList(keyword);
         GraphResult result = graphService.bloomNow(finallist.get(0));
-        result.answers = finallist;
+        result = segService.enlightList(result,finallist);
         return new Gson().toJson(result);
     }
 }

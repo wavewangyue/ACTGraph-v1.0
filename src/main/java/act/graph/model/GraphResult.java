@@ -9,11 +9,12 @@ import java.util.List;
 public class GraphResult {
     public List<GraphNode> nodes;
     public List<GraphEdge> links;
-    public List<String> answers;
+    public List<Integer> answerpath;
+    public String answer;
 
     public GraphResult(){
         nodes = new ArrayList<GraphNode>();
         links = new ArrayList<GraphEdge>();
-        answers = new ArrayList<String>();
+        answerpath = new ArrayList<Integer>();
     }
 }
