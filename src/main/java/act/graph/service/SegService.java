@@ -50,6 +50,7 @@ public class SegService {
                 finalList.add(word.get("cont").getAsString());
             }
         }
+        if (!longentity.equals("")) finalList.add(longentity);
         log.info("segFinalList:"+finalList.toString());
         return finalList;
     }

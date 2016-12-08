@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KnowledgeGraph v1.0</title>
+    <script src="../js/ex/echarts.js"></script>
+    <script src="../js/ex/dark.js"></script>
+    <script src="../js/ex/jquery-3.1.1.min.js"></script>
+    <script src="../js/ex/bootstrap.min.js"></script>
+    <script src="../js/graph.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+</head>
+
+<style>
+    html,body{ 
+        margin:0px; 
+        height:100%;
+    }
+    body{
+        background-color:#060A0E;
+    }
+    #panel{
+        position:absolute;
+        width:100%;
+        height:100%;
+        display:none;
+    }
+    #interface{
+        width:100%;
+        height:100%;
+        text-align: center;
+    }
+    .mytext{
+        font-family: 微软雅黑;
+        color:lightgray;
+        font-size:1em;
+        padding:0.2em;
+    }
+    .tip{
+        font-family: 微软雅黑;
+        font-size:1.5em;
+        width:30%;
+        margin-left:70%;
+        text-align: right;
+        position:absolute;
+        padding: 4em;
+        color:lightgray;
+    }
+    .talkbar{
+        position:absolute;
+        width:30%;
+        height:100%;
+        margin-left:70%;
+        padding: 5em;
+        text-align: right;
+        display:none;
+        font-family: 微软雅黑;
+    }
+    .talkbubble{
+        margin:0 auto;
+        padding: 0.5em;
+        font-size: 1.5em;
+    }
+    #talkinput{
+        font-size: 1.5em;
+        text-align:center;
+        padding:0.5em;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius:10px;
+        margin-top:2%;
+    }
+</style>
+
+<body onload="init()" onkeydown="if(event.keyCode==27) talkboxshow()">
+
+    <!--图谱界面-->
+    <div id="panel"></div>
+
+    <!--对话界面-->
+    <div class="tip">按'Esc'键呼出<span style="color:GreenYellow">小航</span></div>
+    <div class="talkbar" >
+        <div class="talkbubble" style="color:#F08080">有什么可以帮你的？</div>
+        <input id="talkinput" type="text" onkeydown="if(event.keyCode==13) talk()"/>
+    </div>
+
+    <!--主界面-->
+    <div id="interface">
+        <img src="../img/kglogo.png" style="margin-top:15%">
+        <div id="inputbox" class="input-group input-group-lg" style="width:30%;margin:0 auto;padding:1em" >
+            <input id="input" type="text" class="form-control" style="text-align:center" value="北京航空航天大学" onkeydown="if(event.keyCode==13) search()"/>
+            <span class="input-group-addon" style="cursor:pointer" onclick="search()">Graph Go!</span>
+        </div>
+        <hr style="height:1px;border:none;width:20%;border-top:1px solid lightgray;margin-top:5%" />
+        <p class="mytext" style="font-weight:bold;font-size:1.5em">Copyright © 2016</p>
+        <p class="mytext">The Institute of Advanced Computing Technology</p>
+        <p class="mytext">BeiHang University</p>
+        <img src="../img/actlogo.jpg" style="width:5%">
+        <button type="button" class="close"/>
+    </div>
+
+    <!--实体信息模态框-->
+    <div class="modal fade" id="entityInfoModal" tabindex="-1" role="dialog" aria-labelledby="entityInfoModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+                    <h4 class="modal-title" id="entityInfoModalTitle">详细信息</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tbody id="entityInfoModalTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

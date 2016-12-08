@@ -23,9 +23,10 @@ public class GraphService {
     private static int maxLevel = 3;//最大递归查询层数
 
     public JsonObject EntityInfo = new JsonObject();
-    private GraphResult graphResult = new GraphResult();
 
     public GraphResult bloomNow(String keyword) throws IOException{
+
+        GraphResult graphResult = new GraphResult();
 
         int pointer = 0;//待被查询的节点队列指针
 
