@@ -1,7 +1,9 @@
-# actgraph-v1.0
-KnowledgeGraph of ACTLib, BUAA. Version 1.0.
+# actgraph-v1.0-abandoned
+KnowledgeGraph of ACTLib, BUAA. Version 1.0. 
+But this sample is abandoned.
+The real version 1.0 is served by python+django.
 
-Newborn, and impressive.
+Transition, and impressive.
 
 Copyright@2016
 
