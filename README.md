@@ -1,13 +1,9 @@
-# actgraph-v1.0-abandoned
-KnowledgeGraph of ACTLib, BUAA. Version 1.0. 
+# 北航知识图谱系统 actkg
+版本1.0-废弃的
+此样本起初作为正式版本开发，后被替代，此样本留以后续开发参考使用
+目前的正式版本使用python+django平台
+Copyright@2016 ACT实验室，北航
 
-But this sample is abandoned.
-
-The real version 1.0 is served by python+django.
-
-Transition, and impressive.
-
-Copyright@2016
-
-#Project Environment
+# 开发环境
 Intellij IDEA
+Java + SpringMVC
