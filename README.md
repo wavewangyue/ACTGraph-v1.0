@@ -1,15 +1,10 @@
-# 北航知识图谱系统 actkg
+# 北航知识图谱系统 ACTKG
 
-版本1.0-废弃的
+version 1.0, but abandoned.
 
-此样本起初作为正式版本开发，后被替代，此样本留以后续开发参考使用
+此样本基于 java, 为总项目中期时的演示系统, 起初作为正式版本开发，后被基于 python 的重制版替代，此样本留以后续开发参考使用
 
-目前的正式版本使用python+django平台
+©Copyright 2016, ACTLib, Beihang University
 
-Copyright@2016 ACT实验室，北航
+Coded with Java and Intellij IDEA, built with SpringMVC.
 
-# 开发环境
-
-Intellij IDEA
-
-Java + SpringMVC
