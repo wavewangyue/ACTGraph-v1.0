@@ -1,4 +1,4 @@
-# 北航知识图谱系统 ACTKG
+# 北航知识图谱系统 actkg
 
 version 1.0, but abandoned.
 
